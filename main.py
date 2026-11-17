@@ -265,5 +265,13 @@ def export(t: str, s=Depends(db), u=Depends(admin)):
     return StreamingResponse(iter([f.getvalue()]), media_type="text/csv",
                              headers={"Content-Disposition": f"attachment; filename={t}.csv"})
 
+BASE = os.path.dirname(__file__)
+
 @app.get("/")
-def home(): return FileResponse(os.path.join(os.path.dirname(__file__), "static", "index.html"))
+def home(): return FileResponse(os.path.join(BASE, "static", "index.html"))
+
+@app.get("/style.css")
+def css(): return FileResponse(os.path.join(BASE, "static", "style.css"), media_type="text/css")
+
+@app.get("/app.js")
+def js(): return FileResponse(os.path.join(BASE, "static", "app.js"), media_type="application/javascript")
